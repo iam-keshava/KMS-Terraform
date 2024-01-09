@@ -1,4 +1,4 @@
-name: Terraform CI
+name: Terraform apply pipeline
 
 on:
   workflow_dispatch:  # Manually trigger workflow

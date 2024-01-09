@@ -1,11 +1,7 @@
-
-
 name: Terraform Deployment
 
 on:
-  push:
-    branches:
-      - main  # Adjust to your branch name
+  workflow_dispatch:  # Manually trigger workflow
 
 jobs:
   terraform:
@@ -37,4 +33,4 @@ jobs:
       # Apply Terraform changes
       - name: Terraform Apply
         run: terraform apply -auto-approve -input=false
-        # You might want to add -auto-approve for non-interactive runs
+        # You might want to add -auto-approve for non-interactive runs.

@@ -47,13 +47,13 @@ variable "key_rotation_period" {
 variable "set_owners_for" {
   description = "Name of keys for which owners will be set."
   type        = list(string)
-  default     = ["my-key-111", "my-key-222"]
+  default     = ["my-key-111", "my-key-222", "my-key-333"]
 }
 
 variable "owners" {
   description = "List of comma-separated owners for each key declared in set_owners_for."
   type        = list(string)
-  default     = ["serviceAccount:kms-sa@extreme-quasar-399203.iam.gserviceaccount.com", "serviceAccount:kms-sa1@extreme-quasar-399203.iam.gserviceaccount.com"]
+  default     = ["serviceAccount:kms-sa@extreme-quasar-399203.iam.gserviceaccount.com", "serviceAccount:kms-sa1@extreme-quasar-399203.iam.gserviceaccount.com", "serviceAccount:kms-sa1@extreme-quasar-399203.iam.gserviceaccount.com"]
 }
 
 variable "set_encrypters_for" {

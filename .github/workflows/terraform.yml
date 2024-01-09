@@ -1,37 +1,35 @@
-name: Terraform Deployment
+name: Terraform CI
 
 on:
   workflow_dispatch:  # Manually trigger workflow
 
 jobs:
   terraform:
-    runs-on: ubuntu-latest  # You can choose your preferred OS
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.0.0  # Adjust to your Terraform version
 
-      # Authenticate with GCP using service account key
-      - name: Configure GCP credentials
-        uses: google-github-actions/auth@v0
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}  # Ensure GCP_SA_KEY secret is added in repository settings
-
-      # Initialize Terraform
       - name: Terraform Init
         run: terraform init
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
-      # Plan Terraform changes
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
-      # Apply Terraform changes
       - name: Terraform Apply
-        run: |
-          terraform apply -auto-approve -input=false -state-out=tfstate
-          echo "TERRAFORM_OUTPUT=$(terraform output -json)" >> $GITHUB_ENV
+        run: terraform apply -auto-approve
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
